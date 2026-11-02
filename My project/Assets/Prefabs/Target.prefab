@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7947153523617449593}
   - component: {fileID: 351953338053014076}
   - component: {fileID: 2157657951766610480}
+  - component: {fileID: 510468346029996143}
   m_Layer: 0
   m_Name: Target
   m_TagString: Untagged
@@ -146,3 +147,16 @@ MonoBehaviour:
   zigzagWidth: 0
   points: 0
   bottomY: -4
+--- !u!114 &510468346029996143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5395630334313960068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c686c5ad4d960547a35b20732579173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TransformSaver
+  saveID: 

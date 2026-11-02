@@ -1,8 +1,10 @@
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Listens for target hits and adds the points to the score.
+/// Listens for target hits and adds the points to the score. Also saves and loads the score.
 /// </summary>
 public class ScoreManager : MonoBehaviour
 {
@@ -23,6 +25,35 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
+        UpdateScoreText();
+    }
+
+    // score gets its own binary file, positions go in the json
+    public void SaveScore(string path)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        using (FileStream stream = File.Create(path))
+        {
+            formatter.Serialize(stream, score);
+        }
+    }
+
+    public void LoadScore(string path)
+    {
+        if (!File.Exists(path))
+        {
+            Debug.Log("no score file");
+            return;
+        }
+
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        using (FileStream stream = File.OpenRead(path))
+        {
+            score = (int)formatter.Deserialize(stream);
+        }
+
         UpdateScoreText();
     }
 

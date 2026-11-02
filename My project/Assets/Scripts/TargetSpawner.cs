@@ -11,6 +11,12 @@ public class TargetSpawner : MonoBehaviour
     public float spawnY = 5.5f;
     public float spawnHalfWidth = 5f; // keep inside the screen, the zigzag swings past the spawn point
 
+    // Target types
+    private const string SmallType = "SmallTarget";
+    private const string MediumType = "MediumTarget";
+    private const string LargeType = "LargeTarget";
+
+    private string[] targetTypes = { SmallType, MediumType, LargeType };
     private TargetDirector director;
     private WaitForSeconds spawnWait;
 
@@ -37,14 +43,20 @@ public class TargetSpawner : MonoBehaviour
     private void SpawnRandomTarget()
     {
         Vector2 position = new Vector2(Random.Range(-spawnHalfWidth, spawnHalfWidth), spawnY);
+        SpawnTarget(targetTypes[Random.Range(0, targetTypes.Length)], position);
+    }
+
+    // SaveManager uses this too, the type doubles as the save id so loading knows what to rebuild
+    public Target SpawnTarget(string type, Vector2 position)
+    {
         TargetBuilder builder;
 
-        switch (Random.Range(0, 3))
+        switch (type)
         {
-            case 0:
+            case SmallType:
                 builder = new SmallTarget(targetPrefab, position);
                 break;
-            case 1:
+            case MediumType:
                 builder = new MediumTarget(targetPrefab, position);
                 break;
             default:
@@ -53,5 +65,7 @@ public class TargetSpawner : MonoBehaviour
         }
 
         director.Construct(builder);
+        builder.Target.GetComponent<TransformSaver>().saveID = type;
+        return builder.Target;
     }
 }
